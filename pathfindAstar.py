@@ -4,6 +4,8 @@ Created by:  Alex Neuenkirk
 """
 import math
 import random
+
+
 def getEstimate(current,goal):
     """Returns the euclidean distance between two tiles."""
     cX = current[0]
