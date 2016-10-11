@@ -16,6 +16,7 @@ def getEstimate(current,goal):
     estimate = math.sqrt((cX-gX)**2 + (cY - gY)**2)
     return int(estimate*10)
 class newAgent():
+    
     def __init__(self, startPosition=[0,0], goalPosition=None):
         """
         :param startPosition: list
@@ -23,6 +24,7 @@ class newAgent():
         """
         self.start = startPosition
         self.goal = goalPosition
+        
     def getPath(self, board):
         # create a new object with the agent's starting position information
         startRecord = TileRecord(self.start, None, 0, self.goal)
@@ -68,13 +70,16 @@ class newAgent():
             path.insert(0,current.location)
             current = current.parent
         return path
+    
+    
 class PathfindingList():
-    """
-    Creates a priority queue that assists in optimizing A* pathfinding.
-    """
+    
+    """Creates a priority queue that assists in optimizing A* pathfinding."""
+    
     def __init__(self):
         # None type is the first element to make indexing easier
         self.items = [None]
+        
     def getSmallest(self):
         """
         Pops and returns the smallest item from the open list and then re-sorts
@@ -127,6 +132,7 @@ class PathfindingList():
                 complete = True
         # return the lowest item that was removed at the start
         return item
+    
     def compareInClosed(self, record):
         for index in range(1,len(self.items)):
             # check if the record's location is in the closed list already
@@ -139,6 +145,7 @@ class PathfindingList():
                 return True
         # if its not in the CL at all, return false so we can check the open list
         return False
+    
     def compareInOpen(self, record):
         for index in range(1,len(self.items)):
             # check if the record's location is in the open list already
@@ -151,6 +158,7 @@ class PathfindingList():
                 return True
         # if its not in the OL at all, return false
         return False
+    
     def switchInClosed(self,i,replacingRecord):
         self.items[i] = replacingRecord
         # while self.items[i/2].costSoFar > self.items[i].costSoFar:
@@ -160,6 +168,7 @@ class PathfindingList():
         #     i /= 2
         #     if i <= 1:
         #         break
+        
     def switchInOpen(self,i,replacingRecord):
         """
         Switches a TileRecord in the open list with one that has the same location and a lower
@@ -176,12 +185,14 @@ class PathfindingList():
             i /= 2
             if i<=1:
                 break
+                
     def getSize(self):
         """
         :rtype int
         :returns The length of the list, including its None item at position 0
         """
         return len(self.items)
+    
     def addToOpen(self, tile):
         """
         Adds a tile to the open list and re-sorts the list to maintain a complete binary heap.
@@ -199,6 +210,7 @@ class PathfindingList():
                     i /= 2
                 else:
                     break
+                    
     def addToClosed(self, tile):
         """
         Adds a TileRecord instance to the closed list
@@ -213,10 +225,14 @@ class PathfindingList():
         :returns An object of type TileRecord located at the passed in index.
         """
         return self.items[index]
+    
+    
 class Board():
+    
     obstacles = []
     rocks = []
     cacti = []
+    
     def __init__(self, width=32, height=24):
         """
         :type width: int
@@ -236,6 +252,7 @@ class Board():
             # If the board is big, make the L wider
             if self.height > 30:
                 self.rocks.append([randX+1,randY+i])
+                
     def createHorizontal(self):
         randY = random.randint(0,self.height)
         randX = random.randint(0,self.width)
@@ -245,6 +262,7 @@ class Board():
             self.rocks.append([randX+i,randY])
             if self.width > 50:
                 self.rocks.append([randX+i,randY+1])
+                
     def createCacti(self):
         iterations = self.height
         for i in range(iterations):
@@ -326,9 +344,10 @@ class Board():
 
 
 class TileRecord():
-    """
-    Creates an object of type TileRecord, which holds important information used in pathfinding.
-    """
+    
+    """Creates an object of type TileRecord, which holds 
+    important information used in pathfinding."""
+    
     def __init__(self, location, parent, costSoFar, goal):
         """
         Constructor for the TileRecord class.
