@@ -5,16 +5,15 @@ Created by:  Alex Neuenkirk
 import math
 import random
 def getEstimate(current,goal):
-    """
-    :type current: list
-    :rtype: int
-    """
+    """Returns the euclidean distance between two tiles."""
     cX = current[0]
     cY = current[1]
     gX = goal[0]
     gY = goal[1]
-    estimate = math.sqrt((cX-gX)**2 + (cY - gY)**2)
+    estimate = math.sqrt((cX - gX) ** 2 + (cY - gY) ** 2)
     return int(estimate*10)
+
+
 class newAgent():
     
     def __init__(self, startPosition=[0,0], goalPosition=None):
